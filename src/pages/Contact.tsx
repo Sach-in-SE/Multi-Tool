@@ -1,12 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Github, Instagram } from 'lucide-react';
 
 const Contact = () => {
+  const [showMessage, setShowMessage] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowMessage(true);
+    // Clear form data
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
+    // Hide message after 5 seconds
+    setTimeout(() => setShowMessage(false), 5000);
+  };
+
   return (
     <div className="min-h-screen py-16 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-900 dark:to-indigo-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-xl p-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Contact Us</h1>
+
+          {/* Success Message */}
+          {showMessage && (
+            <div className="mb-8 p-4 bg-green-100 dark:bg-green-900 border border-green-200 dark:border-green-800 rounded-md shadow-sm">
+              <p className="text-green-700 dark:text-green-300 text-center">
+                Thank you for your valuable feedback! We appreciate your time and effort in helping us improve.
+              </p>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Developer Info */}
@@ -75,7 +112,7 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="mt-12 bg-gradient-to-r from-indigo-50 via-white to-indigo-50 dark:from-gray-700 dark:via-gray-800 dark:to-gray-700 p-8 rounded-lg shadow-sm">
             <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Send us a Message</h2>
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -84,8 +121,12 @@ const Contact = () => {
                   <input
                     type="text"
                     id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:text-white"
                     placeholder="Your name"
+                    required
                   />
                 </div>
                 <div>
@@ -95,8 +136,12 @@ const Contact = () => {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:text-white"
                     placeholder="Your email"
+                    required
                   />
                 </div>
               </div>
@@ -106,9 +151,13 @@ const Contact = () => {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   rows={4}
                   className="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-indigo-500 focus:border-indigo-500 dark:text-white"
                   placeholder="Your message"
+                  required
                 ></textarea>
               </div>
               <button
@@ -119,6 +168,27 @@ const Contact = () => {
               </button>
             </form>
           </div>
+
+          {/* Success Message Alert */}
+          {showMessage && (
+            <div className="fixed inset-0 flex items-center justify-center px-4 z-50">
+              <div className="fixed inset-0 bg-black/30 backdrop-blur-sm"></div>
+              <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full">
+                <div className="text-center">
+                  <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-900">
+                    <svg className="h-6 w-6 text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="mt-3 text-lg font-medium text-gray-900 dark:text-white">Message Sent!</h3>
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Thank you for your valuable feedback! We appreciate your time and effort in helping us improve.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </div>
