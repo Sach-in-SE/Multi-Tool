@@ -81,20 +81,6 @@ const About = () => {
                 </div>
               </div>
             </div>
-
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-8 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-semibold mb-4">Get Started Today</h2>
-              <p className="mb-6">
-                Experience the power of MultiTools and streamline your daily tasks with our suite of 
-                online utilities. No registration required - just choose a tool and get started!
-              </p>
-              <a 
-                href="/tools" 
-                className="inline-block bg-white text-indigo-600 px-6 py-2 rounded-md font-medium hover:bg-indigo-50 transition-colors"
-              >
-                Explore Our Tools
-              </a>
-            </div>
           </div>
         </div>
       </div>
